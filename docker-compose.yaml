@@ -1,0 +1,29 @@
+version: "3"
+services:
+  site:
+    container_name: site
+    image: site
+    ports:
+      - 8080:80
+    volumes:
+      - ./site:/var/www/html/
+    #command:
+      #"chmod 777 ."
+  site2:
+    container_name: site2
+    image: site
+    ports:
+      - 8081:80
+    volumes:
+      - ./site:/var/www/html/
+  nginx:
+    build:
+      context: nginx/
+    ports:
+      - 8000:80
+    depends_on:
+      - site
+      - site2
+
+volumes:
+  site:

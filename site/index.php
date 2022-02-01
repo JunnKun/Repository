@@ -1,8 +1,9 @@
 <?php
     $file_data = json_decode(file_get_contents("data.json"));
+    $id;
     foreach($file_data as $index => $value){
         $id = $value -> data;
-        echo "[$index] $id";
+        echo "[$index] $id<br>";
     }
     $newValore = new stdClass();
     $newValore -> data = ($id+1);
