@@ -1,0 +1,5 @@
+tasks:
+  - init: |
+      php index.php
+    command: |
+      echo 'TODO: start app'
