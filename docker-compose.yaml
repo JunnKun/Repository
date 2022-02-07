@@ -2,7 +2,9 @@ version: "3"
 services:
   site:
     container_name: site
-    image: site
+    build:
+      context: ./site
+      dockerfile: Dockerfile
     ports:
       - 8080:80
     volumes:
@@ -11,19 +13,49 @@ services:
       #"chmod 777 ."
   site2:
     container_name: site2
-    image: site
+    build:
+      context: ./site
+      dockerfile: Dockerfile
     ports:
       - 8081:80
     volumes:
       - ./site:/var/www/html/
   nginx:
     build:
-      context: nginx/
+      context: ./nginx
+      dockerfile: Dockerfile
     ports:
       - 8000:80
     depends_on:
       - site
       - site2
+  db:
+      image: mariadb:10.2
+      restart: always
+      environment:
+        MYSQL_DATABASE: game
+        MYSQL_USER: hu
+        MYSQL_PASSWORD: hu
+        MYSQL_ROOT_PASSWORD: root
+      ports:
+        - "3306"
+      # expose:
+      #   - 3306
+      volumes:
+        - ./db-dump:/var/lib/mysql
+  # db:
+  #   image: mariadb:10.2
+  #   # restart: always
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: game
+  #     MYSQL_USER: hu
+  #     MYSQL_PASSWORD: hu
+  #   ports:
+  #     - "3306"
+  #   volumes:
+  #     - ./dbb:/var/lib/mysql
 
 volumes:
-  site:
+  db:
+  # site:
